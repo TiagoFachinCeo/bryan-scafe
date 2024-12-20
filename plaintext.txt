@@ -1,0 +1,11 @@
+bryanCafe/
+├── index.html                # About page (Home)
+├── menu.html                 # Menu page
+├── contact.html              # Contact page
+├── privacy.html              # Privacy policy page
+├── menu.xml                  # XML file for the menu
+├── menu.dtd                  # DTD file for the menu
+├── branches.xml              # XML file for branch information
+├── branches.dtd              # DTD file for branch information
+├── styles.css                # CSS file for styles
+└── script.js                 # JavaScript file for footer year

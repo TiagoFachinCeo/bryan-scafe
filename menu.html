@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Bryan's Café</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="index.html"><img src="img/logo.png" alt="Bryan's Café Logo"></a>
+            <ul>
+                <li><a href="index.html">About</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="menu">
+            <h1>Our Menu</h1>
+            <h2>Meals</h2>
+            <div id="meals-list"></div>
+
+            <h2>Beverages</h2>
+            <div id="beverages-list"></div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <span id="currentYear"></span> Bryan's Café</p>
+        <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+    </footer>
+
+    <!-- External Script -->
+    <script src="script.js"></script>
+</body>
+</html>
+
+    <script>
+        // script.js - Function to load and display menu items
+        function loadMenu() {
+            fetch('menu.xml')
+                .then(response => response.text())
+                .then(xml => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xml, 'application/xml');
+
+                    // Display Meals
+                    const meals = xmlDoc.getElementsByTagName('meal');
+                    let mealsHTML = '';
+                    for (let i = 0; i < meals.length; i++) {
+                        const name = meals[i].getElementsByTagName('name')[0].textContent;
+                        const price = meals[i].getElementsByTagName('price')[0].textContent;
+                        const description = meals[i].getElementsByTagName('description')[0].textContent;
+                        const image = meals[i].getElementsByTagName('image')[0].textContent;
+
+                        mealsHTML += `
+                            <div class="meal">
+                                <img src="img/meals.jpg" alt="Menu Bryan's Cafe">
+                                <h3>${name}</h3>
+                                <p><strong>Price:</strong> ${price}</p>
+                                <p><strong>Description:</strong> ${description}</p>
+                            </div>
+                        `;
+                    }
+                    document.getElementById('meals-list').innerHTML = mealsHTML;
+
+                    // Display Beverages
+                    const beverages = xmlDoc.getElementsByTagName('beverage');
+                    let beveragesHTML = '';
+                    for (let i = 0; i < beverages.length; i++) {
+                        const name = beverages[i].getElementsByTagName('name')[0].textContent;
+                        const price = beverages[i].getElementsByTagName('price')[0].textContent;
+                        const image = beverages[i].getElementsByTagName('image')[0].textContent;
+                        let sizesHTML = '';
+                        const sizes = beverages[i].getElementsByTagName('size');
+                        for (let j = 0; j < sizes.length; j++) {
+                            const sizeName = sizes[j].getElementsByTagName('name')[0].textContent;
+                            const sizePrice = sizes[j].getElementsByTagName('price')[0].textContent;
+                            const sizeDescription = sizes[j].getElementsByTagName('description')[0].textContent;
+                            sizesHTML += `
+                                <p><strong>${sizeName}</strong> - ${sizePrice}: ${sizeDescription}</p>
+                            `;
+                        }
+
+                        beveragesHTML += `
+                            <div class="beverage">
+                                <img src="img/beverage.jpg" alt="Beverage Bryan's Cafe">
+                                <h3>${name}</h3>
+                                <p><strong>Price:</strong> ${price}</p>
+                                ${sizesHTML}
+                            </div>
+                        `;
+                    }
+                    document.getElementById('beverages-list').innerHTML = beveragesHTML;
+                })
+                .catch(error => console.error('Error loading menu:', error));
+        }
+
+        // Call the function to load the menu when the page loads
+        window.onload = loadMenu;
+
+        // Dynamic Year for Footer
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>

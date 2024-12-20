@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Bryan's Café</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="index.html"><img src="img/logo.png" alt="Bryan's Café Logo"></a>
+            <ul>
+                <li><a href="index.html">About</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="enquiry-form">
+            <h1>Enquiry Form</h1>
+            <form id="contact-form" action="#" method="POST">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="first-name" required>
+
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="last-name" required>
+
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="subject">Message Subject</label>
+                <input type="text" id="subject" name="subject" required>
+
+                <label for="message">Message Body</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+            <p id="confirmation-message"></p>
+        </section>
+
+        <section class="branches">
+            <h2>Our Branches</h2>
+            <div id="branches-list"></div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <span id="currentYear"></span> Bryan's Café</p>
+        <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+        // Dynamic year for footer
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+        // Function to load branch details from XML
+        function loadBranches() {
+            fetch('branches.xml')
+                .then(response => response.text())
+                .then(xml => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xml, 'application/xml');
+
+                    const branches = xmlDoc.getElementsByTagName('branch');
+                    let branchesHTML = '';
+                    for (let i = 0; i < branches.length; i++) {
+                        const address = branches[i].getElementsByTagName('address')[0].textContent;
+                        const contact = branches[i].getElementsByTagName('contact')[0].textContent;
+                        const weekdayHours = branches[i].getElementsByTagName('weekday')[0].textContent;
+                        const weekendHours = branches[i].getElementsByTagName('weekend')[0].textContent;
+                        const mapLink = branches[i].getElementsByTagName('mapLink')[0].textContent;
+
+                        branchesHTML += `
+                            <div class="branch">
+                                <h3>${address}</h3>
+                                <p><strong>Contact:</strong> ${contact}</p>
+                                <p><strong>Weekday Hours:</strong> ${weekdayHours}</p>
+                                <p><strong>Weekend Hours:</strong> ${weekendHours}</p>
+                                <p><a href="${mapLink}" target="_blank">View on Google Maps</a></p>
+                            </div>
+                        `;
+                    }
+
+                    document.getElementById('branches-list').innerHTML = branchesHTML;
+                })
+                .catch(error => console.error('Error loading branches:', error));
+        }
+
+        // Call the function to load branch details when the page loads
+        window.onload = loadBranches;
+
+        // Handle form submission (display confirmation message)
+        document.getElementById("contact-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent actual form submission
+
+            const confirmationMessage = document.getElementById("confirmation-message");
+            confirmationMessage.textContent = "Thank you! Your message has been sent.";
+            confirmationMessage.style.color = "green";
+            document.getElemen
