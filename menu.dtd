@@ -1,3 +1,5 @@
+<!ELEMENT menu (meals, beverages)>
+
 <!ELEMENT meals (meal+)>   <!-- meals contains one or more meal elements -->
 
 <!ELEMENT meal (mealName, mealPrice, mealDescription, mealImage)>
