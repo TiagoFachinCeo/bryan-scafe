@@ -39,10 +39,6 @@
     </footer>
 
     <!-- External Script -->
-    <script src="script.js"></script>
-</body>
-</html>
-
     <script>
         // script.js - Function to load and display menu items
         function loadMenu() {
@@ -56,14 +52,14 @@
                     const meals = xmlDoc.getElementsByTagName('meal');
                     let mealsHTML = '';
                     for (let i = 0; i < meals.length; i++) {
-                        const name = meals[i].getElementsByTagName('name')[0].textContent;
-                        const price = meals[i].getElementsByTagName('price')[0].textContent;
-                        const description = meals[i].getElementsByTagName('description')[0].textContent;
-                        const image = meals[i].getElementsByTagName('image')[0].textContent;
+                        const name = meals[i].getElementsByTagName('mealName')[0].textContent;
+                        const price = meals[i].getElementsByTagName('mealPrice')[0].textContent;
+                        const description = meals[i].getElementsByTagName('mealDescription')[0].textContent;
+                        const image = meals[i].getElementsByTagName('mealImage')[0].textContent;
 
                         mealsHTML += `
                             <div class="meal">
-                                <img src="img/meals.jpg" alt="Menu Bryan's Cafe">
+                                <img src="img/meals.jpg" alt="${name}">
                                 <h3>${name}</h3>
                                 <p><strong>Price:</strong> ${price}</p>
                                 <p><strong>Description:</strong> ${description}</p>
@@ -76,15 +72,15 @@
                     const beverages = xmlDoc.getElementsByTagName('beverage');
                     let beveragesHTML = '';
                     for (let i = 0; i < beverages.length; i++) {
-                        const name = beverages[i].getElementsByTagName('name')[0].textContent;
-                        const price = beverages[i].getElementsByTagName('price')[0].textContent;
-                        const image = beverages[i].getElementsByTagName('image')[0].textContent;
+                        const name = beverages[i].getElementsByTagName('beverageName')[0].textContent;
+                        const price = beverages[i].getElementsByTagName('beveragePrice')[0]?.textContent || 'Price not available'; // Prevent error if price is missing
+                        const image = beverages[i].getElementsByTagName('beverageImage')[0].textContent;
                         let sizesHTML = '';
                         const sizes = beverages[i].getElementsByTagName('size');
                         for (let j = 0; j < sizes.length; j++) {
-                            const sizeName = sizes[j].getElementsByTagName('name')[0].textContent;
-                            const sizePrice = sizes[j].getElementsByTagName('price')[0].textContent;
-                            const sizeDescription = sizes[j].getElementsByTagName('description')[0].textContent;
+                            const sizeName = sizes[j].getElementsByTagName('sizeName')[0].textContent;
+                            const sizePrice = sizes[j].getElementsByTagName('sizePrice')[0].textContent;
+                            const sizeDescription = sizes[j].getElementsByTagName('sizeDescription')[0].textContent;
                             sizesHTML += `
                                 <p><strong>${sizeName}</strong> - ${sizePrice}: ${sizeDescription}</p>
                             `;
@@ -92,7 +88,7 @@
 
                         beveragesHTML += `
                             <div class="beverage">
-                                <img src="img/beverage.jpg" alt="Beverage Bryan's Cafe">
+                                <img src="img/beverage.jpg" alt="${name}">
                                 <h3>${name}</h3>
                                 <p><strong>Price:</strong> ${price}</p>
                                 ${sizesHTML}
