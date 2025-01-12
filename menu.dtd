@@ -1,18 +1,33 @@
-<!ELEMENT menu (meals, beverages)>
-<!ELEMENT meals (meal+)>
-<!ELEMENT meal (name, price, description, image)>
-<!ELEMENT name (#PCDATA)>
-<!ELEMENT price (#PCDATA)>
-<!ELEMENT description (#PCDATA)>
-<!ELEMENT image (#PCDATA)>
+<!ELEMENT meals (meal+)>   <!-- meals contains one or more meal elements -->
 
-<!ELEMENT beverages (beverage+)>
-<!ELEMENT beverage (name, sizes?, price?, image)>
-<!ELEMENT name (#PCDATA)>
-<!ELEMENT price (#PCDATA)>
-<!ELEMENT image (#PCDATA)>
-<!ELEMENT sizes (size+)>
-<!ELEMENT size (name, price, description)>
-<!ELEMENT name (#PCDATA)>
-<!ELEMENT price (#PCDATA)>
-<!ELEMENT description (#PCDATA)>
+<!ELEMENT meal (mealName, mealPrice, mealDescription, mealImage)>
+
+<!ELEMENT mealName (#PCDATA)>
+
+<!ELEMENT mealPrice (#PCDATA)>
+
+<!ELEMENT mealDescription (#PCDATA)>
+
+<!ELEMENT mealImage (#PCDATA)>
+
+
+<!ELEMENT beverages (beverage+)>   <!-- beverages contains one or more beverage elements -->
+
+<!ELEMENT beverage (beverageName, sizes?, beveragePrice?, beverageImage)>
+
+<!ELEMENT beverageName (#PCDATA)>
+
+<!ELEMENT beveragePrice (#PCDATA)>
+
+<!ELEMENT beverageImage (#PCDATA)>
+
+
+<!ELEMENT sizes (size+)>   <!-- sizes contains one or more size elements -->
+
+<!ELEMENT size (sizeName, sizePrice, sizeDescription)>
+
+<!ELEMENT sizeName (#PCDATA)>
+
+<!ELEMENT sizePrice (#PCDATA)>
+
+<!ELEMENT sizeDescription (#PCDATA)>
